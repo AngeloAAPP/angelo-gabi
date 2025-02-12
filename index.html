@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comemoração 5 Meses de Namoro</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4e1d2;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ff3366;
+            animation: fadeIn 3s ease-out;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: #5f4b8b;
+            animation: bounceIn 2s ease-out;
+            margin-bottom: 20px;
+        }
+
+        .heart {
+            font-size: 6em;
+            color: red;
+            animation: pulse 1.5s infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .container {
+            text-align: center;
+            max-width: 100%;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* Estilo do carrossel */
+        .carousel-container {
+            position: relative;
+            width: 200px; /* Garantir que o carrossel tenha o mesmo tamanho da imagem */
+            height: 200px; /* Mesma altura que a imagem */
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 1s ease-in-out;
+        }
+
+        .carousel-images img {
+            width: 200px; /* Definindo o tamanho fixo das imagens */
+            height: 200px;
+            object-fit: contain; /* Mantém a proporção sem cortar a imagem */
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 2em;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        /* Botão de pausa */
+        .pause-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff3366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            p {
+                font-size: 1.2em;
+            }
+
+            .heart {
+                font-size: 5em;
+            }
+
+            .carousel-container {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .carousel-button {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>5 Meses de Amor!</h1>
+        <p>Angelo e Gabrielle, comemorando 5 meses de namoro!</p>
+        <div class="heart">❤️</div>
+
+        <!-- Carrossel -->
+        <div class="carousel-container">
+            <div class="carousel-images">
+                <img src="imagem1.jpeg" alt="Imagem 1">
+                <img src="imagem2.jpeg" alt="Imagem 2">
+                <img src="imagem3.jpeg" alt="Imagem 3">
+                <img src="imagem4.jpeg" alt="Imagem 4">
+            </div>
+            <button class="carousel-button prev" onclick="moveSlide(-1)">❮</button>
+            <button class="carousel-button next" onclick="moveSlide(1)">❯</button>
+        </div>
+        <button class="pause-button" onclick="toggleAutoPlay()">Pausar AutoPlay</button>
+    </div>
+
+    <script>
+        // JavaScript para controlar o carrossel
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.carousel-images img');
+        const totalImages = images.length;
+        let autoplayInterval = null;
+
+        function moveSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = totalImages - 1;
+            if (currentIndex >= totalImages) currentIndex = 0;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const offset = -currentIndex * 200; // Ajustado para deslocar exatamente uma imagem
+            document.querySelector('.carousel-images').style.transform = `translateX(${offset}px)`;
+        }
+
+        function startAutoPlay() {
+            autoplayInterval = setInterval(() => {
+                moveSlide(1);
+            }, 3000); // Altera a imagem a cada 3 segundos
+        }
+
+        function toggleAutoPlay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+                document.querySelector('.pause-button').textContent = "Iniciar AutoPlay";
+            } else {
+                startAutoPlay();
+                document.querySelector('.pause-button').textContent = "Pausar AutoPlay";
+            }
+        }
+
+        // Inicia o autoplay assim que a página carrega
+        startAutoPlay();
+    </script>
+</body>
+</html>
